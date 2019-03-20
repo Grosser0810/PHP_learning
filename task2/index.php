@@ -14,6 +14,8 @@ $newArr = ["Maksim", "Gleb", "Ksysha"];
 foreach ($newArr as & $value) {
     echo $value;
 }
+
+echo "Hello"
 ?>
 
 

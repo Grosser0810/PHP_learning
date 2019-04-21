@@ -1,4 +1,0 @@
-admin:admin@mail.ru:21232f297a57a5a743894a0e4a801fc3
-gleb:gleb@gmail.com:81dc9bdb52d04dc20036dbd8313ed055
-ara:ara@mail.ru:636bfa0fb2716ff876f5e33854cc9648
-armen:armen@mail.ru:791dcfcbb0c4b77751babe30a131d79f

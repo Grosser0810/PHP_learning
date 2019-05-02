@@ -1,6 +1,0 @@
-avatar.jpg:gleb:december181291@mail.ru:armen:hi mi name gleb
-avatar.jpg:oleg:december181291@mail.ru:asdfsd:hi
-avatar.jpg:misha:december181291@mail.ru:asdfsd:hi asdasddsfsadgfdgsdfg
-
-img/avatar2.png:olesya:olesa@mail.com:armen:999999999999999999999999
-avatar2.png:olesya::gleb:45555555555555555555

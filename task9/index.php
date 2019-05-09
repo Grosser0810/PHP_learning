@@ -16,8 +16,17 @@ if(isset($submitBrand)){
      $sqlBrand = mysqli_query($connection,"INSERT INTO brands (id, brand) VALUES (NULL, '{$new}')");
     }
 
+$product = $_POST['product'];
+$submitProduct = $_POST['submit_product'];
 
-$img = $_POST['img'];
+if(isset($submitProduct)){
+    $sqlProduct = mysqli_query($connection,"INSERT INTO products (id, product) VALUES (NULL, '{$product}')");
+    if(!$submitProduct){
+        echo "no";
+    }
+}
+
+$img = $_FILES['img']['name'];
 $cost = $_POST['cost'];
 $name = $_POST['name'];
 $description = $_POST['description'];
@@ -26,9 +35,10 @@ $idProducts = $_POST['id_products'];
 $submitItems = $_POST['submit_item'];
 
 if (isset($submitItems)){
-    $aqlItem = mysqli_query($connection,"INSERT INTO items (id, image, cost, name , description, id_brands, id_products )
-    VALUES (NULL, '{$img}', '{$cost}', '{$name}', '{$description}', '{$idBrands}', '{$idProducts}')");
+    $sqlItem = mysqli_query($connection,"INSERT INTO items (id,image,cost,name,description,id_brands,id_products) VALUES (NULL,'{$img}','{$cost}','{$name}','{$description}','{$idBrands}','{$idProducts}')");
 }
+
+
 
 ?>
 

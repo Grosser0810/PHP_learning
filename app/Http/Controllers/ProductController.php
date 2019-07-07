@@ -59,7 +59,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        // SELECT * FROM products WHERE id = $id
+        $product =  Product::find($id);
+        return view('product.edit', compact('product'));
     }
 
     /**
@@ -71,7 +73,10 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product =  Product::find($id);
+        // UPDATE * VALUES WHERE id = $id
+        $product->update($request->all());
+        return redirect()->route('products.index');
     }
 
     /**
@@ -82,6 +87,8 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // DELETE FROM products WHERE id = $id
+        Product::find($id)->delete();
+        return redirect()->route('products.index');
     }
 }

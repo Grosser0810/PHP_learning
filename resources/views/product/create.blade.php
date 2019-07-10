@@ -29,6 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label for="">Категория продукта</label>
+
                     <select name="cat_id" id="">
                         <option value="1">Категория</option>
                     </select>

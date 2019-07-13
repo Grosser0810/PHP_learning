@@ -17,6 +17,7 @@ Route::get('/', function () {
 
 Route::resource('/products', 'ProductController');
 Route::resource('/categories', 'CategoryController');
+Route::resource('/users', 'UserController');
 
 Auth::routes();
 

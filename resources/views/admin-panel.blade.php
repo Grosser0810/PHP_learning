@@ -257,10 +257,11 @@ desired effect
 
             <!-- Sidebar Menu -->
             <ul class="sidebar-menu" data-widget="tree">
-                <li class="header">HEADER</li>
+                <li class="header">МЕНЮ</li>
                 <!-- Optionally, you can add icons to the links -->
                 <li class="active"><a href="{{route('products.index')}}"><i class="fa fa-link"></i> <span>Продукты</span></a></li>
                 <li><a href="{{route('categories.index')}}"><i class="fa fa-link"></i> <span>Категории</span></a></li>
+                <li><a href="{{route('users.index')}}"><i class="fa fa-link"></i> <span>Пользователи</span></a></li>
                 <li class="treeview">
                     <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
                         <span class="pull-right-container">

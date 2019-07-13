@@ -2,17 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StoreCategoryRequest;
-use App\Http\Requests\UpdateCategoryRequest;
+use App\Http\Requests\StoreUserRequest;
+use App\User;
 use Illuminate\Http\Request;
-use App\Category;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     public function index()
     {
-        $categories = Category::paginate(15);
-        return view('category.index', compact('categories'));
+        $users = User::paginate(15);
+        return view('users.index', compact('users'));
     }
 
     /**
@@ -22,7 +21,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('category.create');
+        return view('users.create');
     }
 
     /**
@@ -31,10 +30,10 @@ class CategoryController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    public function store(StoreCategoryRequest $request)
+    public function store(StoreUserRequest $request)
     {
-        Category::create($request->all());
-        return redirect()->route('categories.index')->with('success','Категори успешно создана');
+        User::create($request->all());
+        return redirect()->route('users.index')->with('success','Пользователь успешно создан');
     }
 
     /**
@@ -56,16 +55,16 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category =  Category::find($id);
-        return view('category.edit', compact('category'));
+        $user =  User::find($id);
+        return view('users.edit', compact('user'));
     }
 
 
-    public function update(UpdateCategoryRequest $request, $id)
+    public function update(StoreUserRequest $request, $id)
     {
-        $category =  Category::find($id);
-        $category->update($request->all());
-        return redirect()->route('categories.index')->with('success','Категори успешно изменена');
+        $user =  User::find($id);
+        $user->update($request->all());
+        return redirect()->route('users.index')->with('success','Пользователь успешно изменен');
     }
 
     /**
@@ -77,7 +76,7 @@ class CategoryController extends Controller
     public function destroy($id)
     {
 
-        Category::find($id)->delete();
-        return redirect()->route('categories.index');
+        User::find($id)->delete();
+        return redirect()->route('users.index');
     }
 }

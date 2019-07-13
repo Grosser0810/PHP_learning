@@ -3,6 +3,12 @@
 @section('content')
     <a href="{{ route('products.create') }}"
        class="btn btn-primary">Создать продукт</a>
+    @if(Session::has('success'))
+        <div class="alert alert-success alert-dismissible">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            {{ Session::get('success') }}
+        </div>
+    @endif
     <table class="table table-striped">
         <thead>
             <tr>
@@ -34,5 +40,7 @@
             </tr>
         @endforeach
         </tbody>
+
     </table>
+    {{ $products->links() }}
 @endsection

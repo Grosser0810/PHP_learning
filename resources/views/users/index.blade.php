@@ -1,8 +1,8 @@
 @extends('admin-panel')
 
 @section('content')
-    <a href="{{ route('categories.create') }}"
-       class="btn btn-primary">Создать категорию</a>
+    <a href="{{ route('users.create') }}"
+       class="btn btn-primary">Создать пользователя</a>
     @if(Session::has('success'))
         <div class="alert alert-success alert-dismissible">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -12,18 +12,22 @@
     <table class="table table-striped">
         <thead>
         <tr>
-            <th>Имя</th>
+            <th>Login</th>
+            <th>Email</th>
+            <th>Password</th>
             <th>Редактирование</th>
             <th>Удаление</th>
         </tr>
         </thead>
         <tbody>
-        @foreach($categories as $category)
+        @foreach($users as $user)
             <tr>
-                <td>{{ $category->category }}</td>
-                <td><a href="{{ route('categories.edit', $category->id) }}" class="btn btn-success">Редактировать</a></td>
+                <td>{{ $user->name }}</td>
+                <td>{{ $user->email }}</td>
+                <td>{{ $user->password }}</td>
+                <td><a href="{{ route('users.edit', $user->id) }}" class="btn btn-success">Редактировать</a></td>
                 <td>
-                    <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                    <form action="{{ route('users.destroy', $user->id) }}" method="post">
                         @csrf
                         <input name="_method" type="hidden" value="DELETE">
                         <button type="submit" class="btn btn-danger">Удалить</button>
@@ -33,6 +37,5 @@
         @endforeach
         </tbody>
     </table>
-    {{ $categories->links() }}
-
+    {{ $users->links() }}
 @endsection

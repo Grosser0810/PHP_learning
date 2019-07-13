@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\StoreProductRequest;
+use App\Http\Requests\UpdateProductRequest;
 use Illuminate\Http\Request;
 use App\Product;
 
@@ -14,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::all();
+        $products = Product::paginate(15);
         return view('product.index', compact('products'));
     }
 
@@ -34,10 +36,10 @@ class ProductController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return void
      */
-    public function store(Request $request)
+    public function store(StoreProductRequest $request)
     {
         Product::create($request->all());
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success','Продукт успешно создан');
     }
 
     /**
@@ -59,7 +61,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        // SELECT * FROM products WHERE id = $id
+
         $product =  Product::find($id);
         return view('product.edit', compact('product'));
     }
@@ -71,12 +73,12 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateProductRequest $request, $id)
     {
         $product =  Product::find($id);
-        // UPDATE * VALUES WHERE id = $id
+
         $product->update($request->all());
-        return redirect()->route('products.index');
+        return redirect()->route('products.index')->with('success','Продукт успешно изменен');
     }
 
     /**
@@ -87,7 +89,7 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        // DELETE FROM products WHERE id = $id
+
         Product::find($id)->delete();
         return redirect()->route('products.index');
     }

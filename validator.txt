@@ -1,0 +1,2 @@
+The W3C CSS Validation Service: http://jigsaw.w3.org/css-validator/
+W3C HTML Validation Service: http://validator.w3.org/

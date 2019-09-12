@@ -21,6 +21,19 @@ class ProductController extends Controller
         return Product::latest()->paginate(6);
     }
 
+    public function soloProduct()
+    {
+        $id = \Request::get('id');
+        $product = Product::where(function($query) use ($id){
+            $query->where('id','LIKE',"%$id%");
+        });
+        //dd($id);
+        //dd($product->get()->toArray());
+        return $product->get();
+
+        //dd($product->get()->toArray());
+    }
+
     public function group()
     {
         return Group::all();

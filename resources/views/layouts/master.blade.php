@@ -98,7 +98,7 @@
                         <ul class="nav nav-treeview">
                             <li class="nav-item">
                                 <router-link to="/admin/preview" class="nav-link">
-                                    <i class="fas fa-users-cog"></i>
+                                    <i class="fas fa-eye"></i>
                                     <p>Превью</p>
                                 </router-link>
                             </li>
@@ -124,6 +124,20 @@
                                 <router-link to="/admin/products" class="nav-link">
                                     <i class="fab fa-product-hunt"></i>
                                     <p>Товары</p>
+                                </router-link>
+                            </li>
+
+                            <li class="nav-item">
+                                <router-link to="/admin/news" class="nav-link">
+                                    <i class="fas fa-newspaper"></i>
+                                    <p>Новости</p>
+                                </router-link>
+                            </li>
+
+                            <li class="nav-item">
+                                <router-link to="/admin/price" class="nav-link">
+                                    <i class="fas fa-dollar-sign"></i>
+                                    <p>Прайс-лист</p>
                                 </router-link>
                             </li>
 

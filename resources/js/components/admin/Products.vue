@@ -12,10 +12,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Products Table</h3>
+                        <h3 class="card-title">Табилца продуктов</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Add Product <i class="fas fa-user-plus fa-fw"></i></button>
+                            <button class="btn btn-success" @click="newModal">Добавить продукт <i class="fas fa-user-plus fa-fw"></i></button>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -23,15 +23,16 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
-                                <th>Title</th>
-                                <th>Image</th>
-                                <th>Stock</th>
-                                <th>Code</th>
-                                <th>Description</th>
-                                <th>Price</th>
-                                <th>Composition</th>
-                                <th>Group</th>
-                                <th>Manufacturer</th>
+                                <th>Название</th>
+                                <th>Картинка</th>
+                                <th>Наличие</th>
+                                <th>Артикул</th>
+                                <th>Описание</th>
+                                <th>Цена</th>
+                                <th>Набор</th>
+                                <th>Группа</th>
+                                <th>Производитель</th>
+                                <th>Редактирование</th>
                             </tr>
 
                             <tr v-for="product in products.data" :key="product.id">
@@ -74,8 +75,8 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 v-show="!editmode" class="modal-title" id="addProductLabel">Add Product</h5>
-                        <h5 v-show="editmode" class="modal-title" id="editProductLabel">Update Product</h5>
+                        <h5 v-show="!editmode" class="modal-title" id="addProductLabel">Добавить продукт</h5>
+                        <h5 v-show="editmode" class="modal-title" id="editProductLabel">Изменить продукт</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -83,7 +84,7 @@
                     <form @submit.prevent="editmode ? updateProduct() : createProduct()" >
                         <div class="modal-body">
                             <div class="form-group">
-                                <input v-model="form.title" type="text" name="title"  class="form-control" placeholder="Title" :class="{ 'is-invalid':form.errors.has('title') }">
+                                <input v-model="form.title" type="text" name="title"  class="form-control" placeholder="Название" :class="{ 'is-invalid':form.errors.has('title') }">
                                 <has-error :form="form" field="title"></has-error>
                             </div>
                             <div class="form-group">
@@ -92,27 +93,27 @@
                             </div>
                             <div class="form-group">
                                 <select name="stock" v-model="form.stock" id="stock"  class="form-control" :class="{ 'is-invalid':form.errors.has('stock') }">
-                                    <option value="">Select Stock</option>
-                                    <option value="In stock">В наличии</option>
-                                    <option value="not available">Нет в наличии</option>
+                                    <option value="">Выберите наличие</option>
+                                    <option value="В наличии">В наличии</option>
+                                    <option value="Нет на складе">Нет на складе</option>
                                 </select>
                                 <has-error :form="form" field="type"></has-error>
                             </div>
                             <div class="form-group">
-                                <input v-model="form.code" type="text" name="code"  class="form-control" placeholder="Code" :class="{ 'is-invalid':form.errors.has('code') }">
+                                <input v-model="form.code" type="text" name="code"  class="form-control" placeholder="Артикул" :class="{ 'is-invalid':form.errors.has('code') }">
                                 <has-error :form="form" field="code"></has-error>
                             </div>
                             <div class="form-group">
-                                <input v-model="form.description" type="text" name="description"  class="form-control" placeholder="description" :class="{ 'is-invalid':form.errors.has('description') }">
+                                <textarea  cols="30" rows="10" v-model="form.description" type="text" name="description"  class="form-control" placeholder="Описание" :class="{ 'is-invalid':form.errors.has('description') }"></textarea>
                                 <has-error :form="form" field="description"></has-error>
                             </div>
 
                             <div class="form-group">
-                                <input v-model="form.price" type="text" name="price"  class="form-control" placeholder="Price" :class="{ 'is-invalid':form.errors.has('price') }">
+                                <input v-model="form.price" type="text" name="price"  class="form-control" placeholder="Цена" :class="{ 'is-invalid':form.errors.has('price') }">
                                 <has-error :form="form" field="price"></has-error>
                             </div>
                             <div class="form-group">
-                                <input v-model="form.composition" type="text" name="composition"  class="form-control" placeholder="Composition" :class="{ 'is-invalid':form.errors.has('composition') }">
+                                <input v-model="form.composition" type="text" name="composition"  class="form-control" placeholder="Набор" :class="{ 'is-invalid':form.errors.has('composition') }">
                                 <has-error :form="form" field="composition"></has-error>
                             </div>
 
@@ -137,9 +138,9 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button v-show="!editmode" type="submit" class="btn btn-primary">Create Product</button>
-                            <button v-show="editmode" type="submit" class="btn btn-success">Update Product</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                            <button v-show="!editmode" type="submit" class="btn btn-primary">Добавить продукт</button>
+                            <button v-show="editmode" type="submit" class="btn btn-success">Изменить продукт</button>
                         </div>
                     </form>
                 </div>
@@ -242,8 +243,8 @@
                     .then(()=>{
                         $('#addProduct').modal('hide');
                         swal.fire(
-                            'Updated!',
-                            'Your file has been updated.',
+                            'Изменено!',
+                            'Продукт успешно изменен.',
                             'success'
                         )
 
@@ -253,8 +254,8 @@
 
                         console.log(data);
                         swal(
-                            'Failed!',
-                            'There was something wrong.',
+                            'Ошибка!',
+                            'Что то пошло не так.',
                             'warning'
                         )
                     })
@@ -269,7 +270,7 @@
                         $('#addProduct').modal('hide');
                         swal.fire({
                             type: 'success',
-                            title: 'Product Created successfully'
+                            title: 'Продукт успешно создан'
                         })
                     })
                     .catch(()=>{
@@ -282,19 +283,20 @@
 
                 swal.fire({
                     title: 'Вы уверены?',
-                    text: "You won't be able to revert this!",
+                    text: "Продукт будет удален!",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Да, удалить!',
+                    cancelButtonText: 'Отмена'
                 }).then((result) => {
                     if (result.value) {
                         this.form.delete('/api/product/'+id)
                             .then(()=>{
                                 swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Удалено!',
+                                    'Продукт успешно удален.',
                                     'success'
                                 )
 
@@ -304,8 +306,8 @@
                             .catch((data)=>{
                                 console.log(data);
                                 swal(
-                                    'Failed!',
-                                    'There was something wrong.',
+                                    'Ошибка!',
+                                    'Что то пошло не так.',
                                     'warning'
                                 )
 

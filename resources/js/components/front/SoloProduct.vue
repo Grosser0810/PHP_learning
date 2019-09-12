@@ -1,49 +1,37 @@
 <template>
     <div class="solo-product">
-    <main class="container">
+
+    <main class="container"  v-for="product in products">
         <div class="shop-page-title">
-            <h1>Набор для путешествий «Baxter of California»</h1>
+            <h1>{{product.title}}</h1>
             <ul class="breadcrumbs">
                 <li>
                     <a href="index.html">Главная</a>
                 </li>
                 <li>
-                    Магазин
+                   <router-link to="/shop">Магазин</router-link>
                 </li>
-                <li>
-                    <a href="shop.html">Средства для ухода</a>
-                </li>
-                <li class="current">
-                    Набор для путешествий «Baxter of California»
+                <li class="current"  v-for="product in products">
+                    {{product.title}}
                 </li>
             </ul>
         </div>
         <div class="clearfix solo-flex">
             <section class="item-preview-left">
-                <div class="image-container-big">
-                    <img src="img/item-preview-1.png"  alt="Набор для путешествий «Baxter of California»">
+                <div  class="image-container-big">
+                    <img :src="getSrc(product.image)"  :alt="product.title">
                 </div>
-                <div class="image-container">
-                    <a href="#" class="item-image-view">
-                        <img src="img/item-preview-2.png" alt="Набор для путешествий «Baxter of California»">
-                    </a>
-                    <a href="#" class="item-image-view">
-                        <img src="img/item-preview-3.png" alt="Набор для путешествий «Baxter of California»">
-                    </a>
-                    <a href="#" class="item-image-view">
-                        <img src="img/item-preview-4.png" alt="Набор для путешествий «Baxter of California»">
-                    </a>
-                </div>
+
             </section>
             <section class="item-preview-right">
                 <div class="item-article">
                     <div class="item-article-flex">
-                        <p>Есть в наличии</p>
-                        <span>Артикул: Dexter-AE</span>
+                        <p>{{product.stock}}</p>
+                        <span>Артикул: {{product.code}}</span>
                     </div>
-                    <p class="description">Travel Kit – необходимый аксессуар во время любого путешествия. В аккуратной кожаной сумке находится все, что нужно для бритья и ухода за кожей во время рабочей поездки или отдыха: средство для умывания, увлажняющий крем, крем для бритья, крем после бритья, шампунь. Набор также может стать отличным подарком.</p>
+                    <p class="description">{{product.description}}</p>
                     <div class="cost-good item-place">
-                        <div class="price">2 900 руб.</div>
+                        <div class="price">{{product.price}} BYN</div>
                         <a href="#" class="btn-front">Купить</a>
                     </div>
                 </div>
@@ -68,8 +56,28 @@
 
 <script>
     export default {
+        data () {
+            return {
+                id: this.$route.params['id'],
+                products: {},
+            }
+        },
+
+        methods: {
+            loadProduct(){
+                axios.get('/api/loadSoloProduct?id=' + this.id)
+                    .then((data) =>
+                        (this.products = data.data));
+
+            },
+            getSrc(img){
+                let image = "/img/product/" + img;
+                return image;
+            },
+        },
+
         mounted() {
-            console.log('Component mounted.')
+            this.loadProduct();
         }
     }
 </script>

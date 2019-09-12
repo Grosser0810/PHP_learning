@@ -3,25 +3,17 @@
     <div class="container">
 
     <div class="shop-page-title">
-        <h1>Cредства для ухода</h1>
+        <h1>Магазин</h1>
         <ul class="breadcrumbs">
             <li>
                 <router-link to="/" class="nav-link">Главная</router-link>
             </li>
-            <li>
-                <router-link to="/shop" class="nav-link">Магазин</router-link>
+            <li class="current">Магазин
             </li>
-            <li v-for="group in groups" class="current">
-                {{group.group}}
-            </li>
+
         </ul>
     </div>
-
-
-
-
     <div class="shop-content clearfix">
-
             <input type="checkbox" id="hmt" class="hidden-menu-ticker">
         <label class="btn-menu" for="hmt">
             <i class="fas fa-angle-double-right fa-2x"></i>
@@ -59,7 +51,7 @@
         <div class="catalog">
             <div v-for="product in products.data" :key="product.id" class="list-of-goods">
                 <div class="image-good">
-                    <router-link to="/shop/solo">
+                    <router-link :to="'/shop/' + product.id" :key="product.id">
                         <img :src="getSrc(product.image)" width="220" height="165" :alt="product.title">
                     </router-link>
                 </div>
@@ -455,6 +447,7 @@
             getSrc(img){
                 let image = "/img/product/" + img;
                 return image;
+                console.log(img);
 
             },
 

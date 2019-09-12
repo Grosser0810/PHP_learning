@@ -34,10 +34,38 @@
                     <li><router-link to="/contacts" class="nav-link">Контакты</router-link></li>
                 </ul>
         </nav>
+        @if(Auth::check())
 
-        <div class="enter">
-            <i class="fa fa-sign-in sign" aria-hidden="true"></i><a href="#">вход</a>
-        </div>
+            <div class="users-block">
+                <div style="color: white">
+                    {{ Auth::user()->name }}
+                </div>
+                <div class="users-block-flex">
+                <div class="cart" style="color: white">
+                    <i class="fas fa-shopping-cart"></i>
+                </div>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('logout') }}"
+                           onclick="event.preventDefault();
+                                 document.getElementById('logout-form').submit();">
+                            <i class="nav-icon fa fa-power-off"></i>
+                            <p>
+                                {{ __('Logout') }}
+                            </p>
+                        </a>
+
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                            @csrf
+                        </form>
+                    </li>
+                </div>
+            </div>
+        @else
+            <div class="enter">
+                <i class="fa fa-sign-in sign" aria-hidden="true"></i><a href="#">вход</a>
+            </div>
+        @endif
+
     </div>
 
 
@@ -62,19 +90,21 @@
 
             <p class="size30">личный кабинет</p>
             <p class="size14 ">введите пожалуста свой логин и пароль</p>
-            <form class="registration-form"  action="">
-                <input type="text" placeholder="ЛОГИН" name="login" id="login" class="login-form size14"><br>
+            <form class="registration-form"  method="POST" action="{{ route('login') }}">
+                @csrf
+                <input type="email" placeholder="EMAIL" name="email" id="email" class="login-form size14 @error('email') is-invalid @enderror" value="{{ old('email') }}" required autocomplete="email" autofocus><br>
 
-                <input type="password" placeholder="ПАРОЛЬ" name="password" id="password" class="login-form size14">
+                <input type="password" placeholder="PASSWORD" name="password" id="password" class="login-form size14 @error('password') is-invalid @enderror" required autocomplete="current-password">
+
                 <div class="check">
                     <div id="checkbox">
-                        <input type="checkbox" name="remember" id="remember">
+                        <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label for="remember" class="size14">запомните меня</label>
 
                     </div>
                     <a class="forget" href="" class="">я забыл пароль!</a>
                 </div>
-                <button class="size14">войти</button>
+                <button type="submit"  class="size14">войти</button>
                 <button class="size14 registration-link">регистрация</button>
             </form>
             <i class="fa fa-user" aria-hidden="true"></i>
@@ -119,4 +149,5 @@
 <script src="https://api-maps.yandex.ru/2.1/?apikey=d096d518-617b-4b3a-af15-0b7fa5898075&lang=ru_RU" type="text/javascript"></script>
 <script src="https://kit.fontawesome.com/5675eab6b2.js"></script>
 <script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/map.js')}}"></script>
 </body>

@@ -4,10 +4,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Manufacturers Table</h3>
+                        <h3 class="card-title">Таблица производителей</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Add Manufacturer <i class="fas fa-user-plus fa-fw"></i></button>
+                            <button class="btn btn-success" @click="newModal">Добавить производителя  <i class="fas fa-industry"></i></button>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -15,8 +15,8 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
-                                <th>Manufacturer Name</th>
-                                <th>Action</th>
+                                <th>производитель</th>
+                                <th>Редоктирование</th>
                             </tr>
 
                             <tr v-for="manufacturer in manufacturers.data" :key="manufacturer.id">
@@ -49,8 +49,8 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 v-show="!editmode" class="modal-title" id="addManufacturerLabel">Add Manufacturer</h5>
-                        <h5 v-show="editmode" class="modal-title" id="editManufacturerLabel">Update Manufacturer</h5>
+                        <h5 v-show="!editmode" class="modal-title" id="addManufacturerLabel">Добавить производителя</h5>
+                        <h5 v-show="editmode" class="modal-title" id="editManufacturerLabel">Изменить производителя</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -64,9 +64,9 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button v-show="!editmode" type="submit" class="btn btn-primary">Create Manufacturer</button>
-                            <button v-show="editmode" type="submit" class="btn btn-success">Update Manufacturer</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                            <button v-show="!editmode" type="submit" class="btn btn-primary">Добавить производителя</button>
+                            <button v-show="editmode" type="submit" class="btn btn-success">Изменить производителя</button>
                         </div>
                     </form>
                 </div>
@@ -111,19 +111,17 @@
                     .then(()=>{
                         $('#addManufacturer').modal('hide');
                         swal.fire(
-                            'Updated!',
-                            'Your file has been updated.',
+                            'Изменено!',
+                            'Производитель успешно изменён.',
                             'success'
                         )
                         this.$emit('AfterCreate');
-
-
                     })
                     .catch((data)=> {
                         console.log(data);
                         swal(
-                            'Failed!',
-                            'There was something wrong.',
+                            'Ошибка!',
+                            'Что то пошло не так.',
                             'warning'
                         )
                     })
@@ -151,7 +149,7 @@
                         $('#addManufacturer').modal('hide');
                         swal.fire({
                             type: 'success',
-                            title: 'Manufacturer Created successfully'
+                            title: 'Производитель успешно создан'
                         })
                     })
 
@@ -161,12 +159,13 @@
 
                 swal.fire({
                     title: 'Вы уверены?',
-                    text: "You won't be able to revert this!",
+                    text: "Производитель будет удалён",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Да, удалить!',
+                    cancelButtonText: 'Отмена'
                 }).then((result) => {
 
 
@@ -175,8 +174,8 @@
                             .then(()=>{
 
                                 swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Удалено!',
+                                    'Производить удалён успешно.',
                                     'success'
                                 )
 
@@ -186,11 +185,10 @@
                             .catch((data)=>{
                                 console.log(data);
                                 swal(
-                                    'Failed!',
-                                    'There was something wrong.',
+                                    'Ошибка!',
+                                    'Что то пошло не так.',
                                     'warning'
                                 )
-
                             })
                     }
                 })

@@ -1,5 +1,5 @@
 require('./bootstrap');
-require('./map');
+
 
 
 window.Vue = require('vue');
@@ -37,20 +37,22 @@ import VueRouter from 'vue-router'
 Vue.use(VueRouter)
 
 let routes = [
-    { path: '/admin/dashboard', component: require('./components/admin/Dashboard.vue').default },
+    { path: '/admin/comment', component: require('./components/admin/Dashboard.vue').default },
     { path: '/admin/preview', component: require('./components/admin/Preview.vue').default },
     { path: '/admin/users', component: require('./components/admin/Users.vue').default },
     { path: '/admin/groups', component: require('./components/admin/Groups.vue').default },
     { path: '/admin/manufacturers', component: require('./components/admin/Manufacturers.vue').default },
     { path: '/admin/products', component: require('./components/admin/Products.vue').default },
     { path: '/admin/carousel', component: require('./components/admin/Carousel.vue').default },
+    { path: '/admin/price', component: require('./components/admin/Price.vue').default },
+    { path: '/admin/news', component: require('./components/admin/News.vue').default },
     { path: '/', component: require('./components/front/Main.vue').default },
     { path: '/information', component: require('./components/front/Information.vue').default },
     { path: '/contacts', component: require('./components/front/Contacts.vue').default },
     { path: '/news', component: require('./components/front/News.vue').default },
     { path: '/price', component: require('./components/front/Price.vue').default },
     { path: '/shop', component: require('./components/front/Shop.vue').default },
-    { path: '/shop/solo', component: require('./components/front/SoloProduct.vue').default },
+    { path: '/shop/:id', component: require('./components/front/SoloProduct.vue').default },
 ]
 
 const router = new VueRouter({

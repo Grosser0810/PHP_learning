@@ -5,21 +5,20 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Slide Table</h3>
+                        <h3 class="card-title">Таблица Слайдов</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Add Slide <i class="fas fa-user-plus fa-fw"></i></button>
+                            <button class="btn btn-success" @click="newModal">Добавить слайд <i class="nav-icon fas fa-tachometer-alt"></i></button>
                         </div>
                     </div>
-                    <!-- /.card-header -->
+
                     <div class="card-body table-responsive p-0">
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
-                                <th>Image</th>
-
+                                <th>Картинка</th>
+                                <th>Редоктирование</th>
                             </tr>
-
                             <tr v-for="slide in slides.data" :key="slide.id">
                                 <td>{{ slide.id }}</td>
                                 <td>
@@ -37,22 +36,20 @@
                             </tr>
                         </table>
                     </div>
-                    <!-- /.card-body -->
+
                     <div class="card-footer">
                         <pagination :data="slides" @pagination-change-page="getResults"></pagination>
                     </div>
                 </div>
-                <!-- /.card -->
-            </div>
-        </div><!-- /.row -->
 
-        <!-- Modal -->
+            </div>
+        </div>
         <div class="modal fade" id="addSlide" tabindex="-1" role="dialog" aria-labelledby="addSlideLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 v-show="!editmode" class="modal-title" id="addSlideLabel">Add Slide</h5>
-                        <h5 v-show="editmode" class="modal-title" id="editSlideLabel">Update Slidet</h5>
+                        <h5 v-show="!editmode" class="modal-title" id="addSlideLabel">Добавить слайд</h5>
+                        <h5 v-show="editmode" class="modal-title" id="editSlideLabel">Изменить слайд</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -67,9 +64,9 @@
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button v-show="!editmode" type="submit" class="btn btn-primary">Add Slide</button>
-                            <button v-show="editmode" type="submit" class="btn btn-success">Update Slide</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                            <button v-show="!editmode" type="submit" class="btn btn-primary">Добавить слайд</button>
+                            <button v-show="editmode" type="submit" class="btn btn-success">Изменить слайд</button>
                         </div>
                     </form>
                 </div>
@@ -139,16 +136,13 @@
                 $('#addSlide').modal('show');
             },
 
-
             updateSlide(){
-
-
                 this.form.put('/api/carousel/'+ this.form.id)
                     .then(()=>{
                         $('#addSlide').modal('hide');
                         swal.fire(
-                            'Updated!',
-                            'Your file has been updated.',
+                            'Изменено!',
+                            'Ваш файл был обновлен.',
                             'success'
                         )
 
@@ -158,8 +152,8 @@
 
                         console.log(data);
                         swal(
-                            'Failed!',
-                            'There was something wrong.',
+                            'Ошибка!',
+                            'Что то пошло не так',
                             'warning'
                         )
                     })
@@ -174,32 +168,32 @@
                         $('#addSlide').modal('hide');
                         swal.fire({
                             type: 'success',
-                            title: 'Slide Created successfully'
+                            title: 'Слайд успешно добавлен'
                         })
                     })
                     .catch(()=>{
 
                     })
-
             },
 
             deleteSlide(id){
 
                 swal.fire({
                     title: 'Вы уверены?',
-                    text: "You won't be able to revert this!",
+                    text: "Слайд будет окончательно удален",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Да, удалить!',
+                    cancelButtonText: 'Отмена'
                 }).then((result) => {
                     if (result.value) {
                         this.form.delete('/api/carousel/'+id)
                             .then(()=>{
                                 swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Удалён!',
+                                    'Ваш файл был удален',
                                     'success'
                                 )
 
@@ -209,8 +203,8 @@
                             .catch((data)=>{
                                 console.log(data);
                                 swal(
-                                    'Failed!',
-                                    'There was something wrong.',
+                                    'Ошибка!',
+                                    'что то пошло не так',
                                     'warning'
                                 )
 

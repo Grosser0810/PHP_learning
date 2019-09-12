@@ -131,8 +131,8 @@
                     .then(()=>{
                         $('#addPreview').modal('hide');
                         swal.fire(
-                            'Updated!',
-                            'Your file has been updated.',
+                            'Изменено!',
+                            'Превью успешно изменено.',
                             'success'
                         )
 
@@ -142,8 +142,8 @@
 
                         console.log(data);
                         swal(
-                            'Failed!',
-                            'There was something wrong.',
+                            'Ошибка!',
+                            'Что то пошло не так.',
                             'warning'
                         )
                     })
@@ -158,7 +158,7 @@
                         $('#addPreview').modal('hide');
                         swal.fire({
                             type: 'success',
-                            title: 'Preview Created successfully'
+                            title: 'Превью успешно создано'
                         })
                     })
                     .catch(()=>{
@@ -171,19 +171,20 @@
 
                 swal.fire({
                     title: 'Вы уверены?',
-                    text: "You won't be able to revert this!",
+                    text: "Превью будет удалено!",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
+                    confirmButtonText: 'Да, удалить!',
+                    cancelButtonText: 'Отмена'
                 }).then((result) => {
                     if (result.value) {
                         this.form.delete('/api/preview/'+id)
                             .then(()=>{
                                 swal.fire(
-                                    'Deleted!',
-                                    'Your file has been deleted.',
+                                    'Удалено!',
+                                    'Превью успешно удалено.',
                                     'success'
                                 )
 
@@ -193,8 +194,8 @@
                             .catch((data)=>{
                                 console.log(data);
                                 swal(
-                                    'Failed!',
-                                    'There was something wrong.',
+                                    'Ошибка!',
+                                    'Что то пошло не так.',
                                     'warning'
                                 )
 

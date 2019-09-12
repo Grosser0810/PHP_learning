@@ -4,10 +4,10 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h3 class="card-title">Таблица групп товаров</h3>
+                        <h3 class="card-title">Таблица новостей</h3>
 
                         <div class="card-tools">
-                            <button class="btn btn-success" @click="newModal">Добавить группу  <i class="fas fa-layer-group"></i></button>
+                            <button class="btn btn-success" @click="newModal">Добавить новость <i class="fas fa-user-plus fa-fw"></i></button>
                         </div>
                     </div>
                     <!-- /.card-header -->
@@ -15,21 +15,23 @@
                         <table class="table table-hover">
                             <tr>
                                 <th>ID</th>
-                                <th>Название группы</th>
-                                <th>Редактирование</th>
+                                <th>Заголовок</th>
+                                <th>Новость</th>
+                                <th>Action</th>
                             </tr>
 
-                            <tr v-for="group in groups.data" :key="group.id">
-                                <td>{{ group.id }}</td>
-                                <td>{{ group.group }}</td>
+                            <tr v-for="post in news.data" :key="post.id">
+                                <td>{{ post.id }}</td>
+                                <td>{{ post.title }}</td>
+                                <td>{{ post.text }}</td>
 
                                 <td>
                                     <a href="">
-                                        <i class="fa fa-edit" @click.prevent="editModal(group)" data-toggle="modal" data-target="#editGroup" ></i>
+                                        <i class="fa fa-edit" @click.prevent="editModal(post)" data-toggle="modal" data-target="#editNews" ></i>
                                     </a>
                                     |
                                     <a href="">
-                                        <i class="fa fa-trash" @click.prevent="deleteGroup(group.id)"></i>
+                                        <i class="fa fa-trash" @click.prevent="deleteNews(post.id)"></i>
                                     </a>
                                 </td>
                             </tr>
@@ -38,7 +40,7 @@
                     <!-- /.card-body -->
 
                     <div class="card-footer">
-                        <pagination :data="groups" @pagination-change-page="getResults"></pagination>
+                        <pagination :data="news" @pagination-change-page="getResults"></pagination>
                     </div>
                 </div>
                 <!-- /.card -->
@@ -46,28 +48,33 @@
         </div><!-- /.row -->
 
         <!-- Modal -->
-        <div class="modal fade" id="addGroup" tabindex="-1" role="dialog" aria-labelledby="addGroupLabel" aria-hidden="true">
+        <div class="modal fade" id="addNews" tabindex="-1" role="dialog" aria-labelledby="addNewsLabel" aria-hidden="true">
             <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 v-show="!editmode" class="modal-title" id="addGroupLabel">Добавить группу</h5>
-                        <h5 v-show="editmode" class="modal-title" id="editGroupLabel">Изменить группу</h5>
+                        <h5 v-show="!editmode" class="modal-title" id="addNewsLabel">Добавить новость</h5>
+                        <h5 v-show="editmode" class="modal-title" id="editNewsLabel">Изменить новость</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
-                    <form @submit.prevent="editmode ? updateGroup() : createGroup()">
+                    <form @submit.prevent="editmode ? updateNews() : createNews()">
                         <div class="modal-body">
                             <div class="form-group">
-                                <input v-model="form.group" type="text" name="group"  class="form-control" placeholder="Group" :class="{ 'is-invalid':form.errors.has('group') }">
+                                <input v-model="form.title" type="text" name="title"  class="form-control" placeholder="Заголовок" :class="{ 'is-invalid':form.errors.has('title') }">
+                                <has-error :form="form" field="name"></has-error>
+                            </div>
+
+                            <div class="form-group">
+                                <textarea v-model="form.text" type="text" name="text"  class="form-control" placeholder="Текст новости" :class="{ 'is-invalid':form.errors.has('group') }" cols="30" rows="10"></textarea>
                                 <has-error :form="form" field="name"></has-error>
                             </div>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                            <button v-show="!editmode" type="submit" class="btn btn-primary">Create Group</button>
-                            <button v-show="editmode" type="submit" class="btn btn-success">Update Group</button>
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Закрыть</button>
+                            <button v-show="!editmode" type="submit" class="btn btn-primary">Создать новость</button>
+                            <button v-show="editmode" type="submit" class="btn btn-success">Изменит новость</button>
                         </div>
                     </form>
                 </div>
@@ -83,10 +90,11 @@
         data() {
             return {
                 editmode:true,
-                groups: {},
+                news: {},
                 form: new Form({
                     id: '',
-                    group: '',
+                    title: '',
+                    text: '',
 
                 })
             }
@@ -94,26 +102,26 @@
         methods: {
 
             getResults(page = 1) {
-                axios.get('/api/group/?page=' + page)
+                axios.get('/api/news/?page=' + page)
                     .then(response => {
-                        this.groups = response.data;
+                        this.news = response.data;
                     });
             },
 
-            loadGroups(){
-                axios.get('/api/group')
+            loadNews(){
+                axios.get('/api/news')
                     .then(({data}) =>
-                        (this.groups = data));
+                        (this.news = data));
             },
 
-            updateGroup(){
+            updateNews(){
 
-                this.form.put('/api/group/'+ this.form.id)
+                this.form.put('/api/news/'+ this.form.id)
                     .then(()=>{
-                        $('#addGroup').modal('hide');
+                        $('#addNews').modal('hide');
                         swal.fire(
-                            'Изменно!',
-                            'Ваш фал успешно изменен',
+                            'Изменено!',
+                            'Новость успешно изменена.',
                             'success'
                         )
                         this.$emit('AfterCreate');
@@ -124,45 +132,45 @@
                         console.log(data);
                         swal(
                             'Ошибка!',
-                            'Что то пошло не так',
+                            'Что то пошло не так.',
                             'warning'
                         )
                     })
             },
 
-            editModal(group){
+            editModal(post){
                 this.editmode = true;
                 this.form.reset();
-                $('#addGroup').modal('show');
-                this.form.fill(group);
+                $('#addNews').modal('show');
+                this.form.fill(post);
             },
             newModal(){
                 this.editmode = false;
                 this.form.reset();
-                $('#addGroup').modal('show');
+                $('#addNews').modal('show');
             },
 
 
 
-            createGroup(){
-                this.$Progress.start();
-                this.form.post('/api/group')
+            createNews(){
+
+                this.form.post('/api/news')
                     .then(()=>{
                         this.$emit('AfterCreate');
-                        $('#addGroup').modal('hide');
+                        $('#addNews').modal('hide');
                         swal.fire({
                             type: 'success',
-                            title: 'Группа успешно создана'
+                            title: 'Новость успешно создана'
                         })
                     })
 
             },
 
-            deleteGroup(id){
+            deleteNews(id){
 
                 swal.fire({
                     title: 'Вы уверены?',
-                    text: "You won't be able to revert this!",
+                    text: "Новость будет удалена!",
                     type: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
@@ -173,12 +181,12 @@
 
 
                     if (result.value) {
-                        this.form.delete('/api/group/'+id)
+                        this.form.delete('/api/news/'+id)
                             .then(()=>{
 
                                 swal.fire(
                                     'Удалено!',
-                                    'Ваша группа успешно удалена',
+                                    'Новость успешно удалена.',
                                     'success'
                                 )
 
@@ -202,17 +210,17 @@
         mounted() {
             Fire.$on('searching', () => {
                 let query = this.$parent.search;
-                axios.get('/api/findGroup?q=' + query)
+                axios.get('/api/findNews?q=' + query)
                     .then((data)=>{
-                        this.groups = data.data;
+                        this.news = data.data;
                     })
                     .catch(()=>{
 
                     })
             });
-            this.loadGroups();
+            this.loadNews();
             this.$on('AfterCreate', () => {
-                this.loadGroups();
+                this.loadNews();
             })
         }
     }

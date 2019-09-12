@@ -20,27 +20,17 @@
                 <div class="inner-column-left">
                     <h2>Мы используем только лучшие средства:</h2>
                     <ul class="custom-list-1">
-                        <li>Baxter of California</li>
-                        <li>Mr Natty</li>
-                        <li>Suavecito</li>
-                        <li>Malin Goetz</li>
+                        <li v-for="manufacturer in manufacturers.data" :key="manufacturer.id">{{ manufacturer.manufacturer }}</li>
                     </ul>
                 </div>
                 <div class="inner-column-right">
                     <h2>Цены на услуги наших мастеров:</h2>
                     <table class="prices-table">
-                        <tr>
-                            <td>Стрижка</td>
-                            <td>1500 р.</td>
+                        <tr v-for="price in prices.data" :key="price.id">
+                            <td>{{price.title}} BYN</td>
+                            <td>{{price.cost}} BYN</td>
                         </tr>
-                        <tr>
-                            <td>Стрижка бороды</td>
-                            <td>500 р.</td>
-                        </tr>
-                        <tr>
-                            <td>Накрутка усов</td>
-                            <td>350 р.</td>
-                        </tr>
+
                     </table>
                 </div>
             </div>
@@ -62,8 +52,30 @@
 
 <script>
     export default {
+        data() {
+            return {
+                prices: {},
+                manufacturers: {},
+                }
+        },
+
+        methods: {
+
+            loadPrices(){
+                axios.get('/api/price')
+                    .then(({data}) =>
+                        (this.prices = data));
+            },
+            loadManufacturers(){
+                axios.get('/api/manufacturer')
+                    .then(({data}) =>
+                        (this.manufacturers = data));
+            },
+
+        },
         mounted() {
-            console.log('Component mounted.')
+            this.loadPrices();
+            this.loadManufacturers();
         }
     }
 </script>
